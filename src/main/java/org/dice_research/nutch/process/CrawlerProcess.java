@@ -12,7 +12,9 @@ public class CrawlerProcess extends NutchProcess{
     private int num_rounds = 3;
     
     
-    public CrawlerProcess(List<String> listUris) {
+    public CrawlerProcess(List<String> listUris,String base_dir,int num_rounds) {
+    	super(base_dir);
+    	this.num_rounds = num_rounds;
         generateSeeds(listUris);
     }
     
@@ -22,7 +24,7 @@ public class CrawlerProcess extends NutchProcess{
         
         String crawl_cmd = getBaseDir() + "/crawl -s " 
                 + getBaseDir() + "/urls/ "
-                +  getBaseDir() + "/crawled/ " + String.valueOf(num_rounds);
+                +  getBaseDir() + "/crawled " + String.valueOf(num_rounds);
         
         processBuilder = new ProcessBuilder();
         processBuilder.command("bash","-c",crawl_cmd);

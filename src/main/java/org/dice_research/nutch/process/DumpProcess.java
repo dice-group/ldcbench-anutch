@@ -24,7 +24,8 @@ public class DumpProcess extends NutchProcess{
     private List<Lang> listLangs = new ArrayList<Lang>();
     
     
-    public DumpProcess(String sparqlUrl, String user, String passwd) {
+    public DumpProcess(String sparqlUrl, String user, String passwd,String base_dir) {
+      super(base_dir);
       sink = SparqlBasedSink.create(sparqlUrl, user,
               passwd);
       
@@ -73,14 +74,12 @@ public class DumpProcess extends NutchProcess{
         StreamRDF filtered = new FilterSinkRDF(curi, sink);
         for(File file: listFiles) {
             System.out.println("File: " + file.getName());
-            for (Lang l : listLangs) {
-                System.out.println(" -> " + l.getName() );
                 try {
-                    RDFDataMgr.parse(filtered, file.getAbsolutePath(), l);
+                    RDFDataMgr.parse(filtered, file.getAbsolutePath(), Lang.RDFXML);
                     break;
                 } catch (Exception e) {
                 }
-            }
+            
         }
         sink.closeSinkForUri(curi);
     } catch (URISyntaxException e) {

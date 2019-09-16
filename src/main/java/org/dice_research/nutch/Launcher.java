@@ -15,17 +15,19 @@ public class Launcher {
         String sparqlUser = System.getenv("SPARQL_USER");
         String sparqlPasswd = System.getenv("SPARQL_PASSWD");
         
+        String base_dir = System.getenv("NUTCH_BASE_DIR");  
+        
+        int num_rounds = Integer.parseInt(System.getenv("NUM_ROUNDS"));
 
         
         List<String> listUris = new ArrayList<String>();
         listUris.add("https://dbpedia.org/resource/Moscow");
-        listUris.add("https://mcloud.de/export/datasets/BA85C835-F36E-446D-A527-7B41A9E18407");
 
-        CrawlerProcess p = new CrawlerProcess(listUris);
+        CrawlerProcess p = new CrawlerProcess(listUris,base_dir,num_rounds);
         p.prepareProcess();
         p.startProcess();
 
-        DumpProcess d = new DumpProcess(sparqlEndpoint, sparqlUser, sparqlPasswd);
+        DumpProcess d = new DumpProcess(sparqlEndpoint, sparqlUser, sparqlPasswd,base_dir);
         d.prepareProcess();
         d.startProcess();
 

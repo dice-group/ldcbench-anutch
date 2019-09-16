@@ -7,9 +7,12 @@ import java.io.InputStreamReader;
 
 public abstract class NutchProcess {
     
-    private String base_dir = "src/main/resources/apache-nutch-1.15/bin/";
-    private File file_dir = new File(base_dir);
+    private File file_dir;
     protected ProcessBuilder processBuilder;
+    
+    public NutchProcess(String base_dir) {
+    	file_dir = new File(base_dir);
+	}
     
     protected String getBaseDir() {
         return file_dir.getAbsolutePath();
