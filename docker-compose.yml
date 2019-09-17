@@ -1,0 +1,31 @@
+version: "2"
+
+services:
+
+  anutch:
+    image: dicegroup/anutch:latest
+    container_name: apache_nutch
+    environment:
+      - NUTCH_BASE_DIR=/var/nutch/bin
+      - SPARQL_URL=http://virtuosohost:8890/sparql-auth/
+      - SPARQL_USER=dba
+      - SPARQL_PASSWD=123pwd
+      - NUM_ROUNDS=6
+      - URLS=https://dbpedia.org/resource/New_York,https://dbpedia.org/resource/Moscow
+    volumes:
+      - ./data/nutch:/var/nutch/data
+    command: java -jar ldcbench-nutch-1.0-with-dependencies.jar
+    ports:
+      - "8080:8080"
+
+  virtuosohost:
+    image: openlink/virtuoso-opensource-7:latest
+    container_name: virtuosohost
+    ports:
+      - "8890:8890"
+    volumes:
+      - ./data/sparqlhost/sparqlhost_data:/virtuoso
+    environment:
+      - Driver=/usr/local/lib/virtodbc_32.so
+      - DBA_PASSWORD=123pwd
+    

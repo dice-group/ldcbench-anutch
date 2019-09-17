@@ -5,7 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class NutchProcess {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(NutchProcess.class);
+
     
     private File file_dir;
     protected ProcessBuilder processBuilder;
@@ -31,9 +37,10 @@ public abstract class NutchProcess {
     
             String line;
             while ((line = reader.readLine()) != null) {
+                
                 output.append(line + "\n");
             }
-    
+            LOGGER.info(output.toString());
             int exitVal = process.waitFor();
             if (exitVal == 0) {
                 System.out.println("Success!");
